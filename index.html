@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Азимбек & Айпери — Чакыруу</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background: radial-gradient(circle,#fff2dd,#8b6746);
+    font-family: Georgia,serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 440px;
+    text-align: center;
+}
+
+/* ЖАРКЫРАГАН ЭФФЕКТ */
+
+.sparkle {
+    position: fixed;
+    color: #ffe6ae;
+    font-size: 19px;
+    animation: sparkle 4s infinite;
+    pointer-events: none;
+}
+
+@keyframes sparkle {
+    0% {opacity:0;transform:translateY(0);}
+    50% {opacity:1;}
+    100% {opacity:0;transform:translateY(-100px);}
+}
+
+/* КОНВЕРТ */
+
+.envelope-area {
+    width: 320px;
+    height: 220px;
+    position: relative;
+    margin: 70px auto 25px;
+    cursor: pointer;
+    perspective: 1000px;
+    transition: 1s;
+}
+
+.envelope {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg,#fff1d8,#d7b47c);
+    border-radius: 8px;
+    box-shadow: 0 20px 50px #30200e80;
+}
+
+.envelope:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    border-bottom: 135px solid #e7c99d;
+    z-index: 3;
+}
+
+.flap {
+    position: absolute;
+    top: 0;
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    border-top: 130px solid #c59b60;
+    transform-origin: top;
+    transition: transform 1.2s;
+    z-index: 5;
+}
+
+.seal {
+    position: absolute;
+    left: 50%;
+    top: 105px;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#a77b3f,#e8c98d);
+    border: 3px solid #fff1d2;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    z-index: 6;
+}
+
+.envelope-label {
+    position: absolute;
+    width: 100%;
+    top: 165px;
+    color: #76532d;
+    font-size: 18px;
+    z-index: 4;
+}
+
+.envelope-area.open .flap {
+    transform: rotateX(180deg);
+}
+
+.envelope-area.open {
+    opacity: 0;
+    transform: translateY(70px);
+}
+
+/* ЧАКЫРУУ КАТЫ */
+
+.card {
+    display: none;
+    position: relative;
+    width: 100%;
+    padding: 35px 22px;
+    background: linear-gradient(145deg,#fffdf6,#fff4df);
+    color: #77552e;
+    border: 5px double #c6a46b;
+    outline: 1px solid #f4e1b9;
+    outline-offset: 5px;
+    box-shadow: 0 20px 60px #38220d70;
+    animation: reveal 2s ease;
+}
+
+.card.show {
+    display: block;
+}
+
+@keyframes reveal {
+    from {
+        opacity: 0;
+        transform: translateY(60px) scale(.85);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.top-flower {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    font-size: 14px;
+    letter-spacing: 4px;
+    color: #a17a43;
+}
+
+.names {
+    font-size: 39px;
+    color: #aa824a;
+    margin: 22px 0;
+    line-height: 1.4;
+}
+
+.and {
+    font-size: 25px;
+    color: #c5a16a;
+}
+
+.line {
+    width: 140px;
+    height: 1px;
+    background: #c7a66e;
+    margin: 18px auto;
+}
+
+.heading {
+    font-size: 23px;
+    color: #99713d;
+    margin: 18px 0;
+}
+
+.text {
+    font-size: 16px;
+    line-height: 1.9;
+    color: #70563b;
+    margin: 18px 0;
+}
+
+.date {
+    font-size: 26px;
+    color: #9c7541;
+    margin: 22px 0;
+}
+
+.address {
+    font-size: 16px;
+    line-height: 1.9;
+    color: #735638;
+}
+
+.footer {
+    font-size: 19px;
+    line-height: 1.9;
+    color: #98713d;
+    margin-top: 25px;
+}
+
+.music {
+    margin-top: 22px;
+    background: linear-gradient(135deg,#b28a50,#e4c68c);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.hint {
+    color: white;
+    letter-spacing: 3px;
+    font-size: 13px;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    50% {opacity:.4;}
+}
+
+@media(max-width:380px) {
+    .envelope-area {
+        width: 280px;
+    }
+
+    .envelope:before {
+        border-left-width:140px;
+        border-right-width:140px;
+    }
+
+    .flap {
+        border-left-width:140px;
+        border-right-width:140px;
+    }
+
+    .names {
+        font-size: 34px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="envelope-area" id="envelope"
+onclick="openCard()">
+
+    <div class="envelope"></div>
+    <div class="flap"></div>
+
+    <div class="envelope-label">
+        Боло жээндерге чакыруу
+    </div>
+
+    <div class="seal">♥</div>
+
+</div>
+
+<div class="hint" id="hint">
+    ✨ ЧАКЫРУУНУ АЧУУ ҮЧҮН БАСТЫҢЫЗ ✨
+</div>
+
+<div class="card" id="card">
+
+    <div class="top-flower">🤍🌹🤍</div>
+
+    <div class="subtitle">
+        WEDDING INVITATION
+    </div>
+
+    <div class="line"></div>
+
+    <div class="heading">
+        БОЛО ЖЭЭНДЕРГЕ ЧАКЫРУУ
+    </div>
+
+    <div class="names">
+        Азимбек
+        <div class="and">&</div>
+        Айпери
+    </div>
+
+    <div class="line"></div>
+
+    <div class="text">
+
+        Урматтуу, сүйүктүү боло жээндерибиз!
+
+        <br><br>
+
+        Сиздерди жашообуздагы эң
+        кубанычтуу күндөрдүн бири —
+        Азимбек менен Айперинин үй
+        тоюна жана келин тоюна арналган
+        салтанаттуу майрамыбызга
+        чын жүрөктөн чакырабыз!
+
+        <br><br>
+
+        Кубанычыбызды тең бөлүшүп,
+        ак дасторконубуздун төрүнөн
+        орун алып, ак тилек, жакшы
+        каалоолоруңуздар менен
+        майрамыбыздын көркүн
+        ачып кетиңиздер!
+
+    </div>
+
+    <div class="line"></div>
+
+    <div class="heading">
+        ҮЙ ТОЙ • КЕЛИН ТОЙ
+    </div>
+
+    <div class="date">
+        25 • 11 • 2026
+    </div>
+
+    <div class="line"></div>
+
+    <div class="address">
+
+        📍 ӨТҮҮЧҮ ЖЕРИ
+
+        <br>
+
+        Аксы району,
+        <br>
+        Кара-Жыгач айылы,
+        <br>
+        Жаңы садиктин жанында.
+
+        <br><br>
+
+        🏡 Үйдө өтөт.
+
+    </div>
+
+    <div class="line"></div>
+
+    <div class="footer">
+
+        Сиздердин келишиңиздер
+        биз үчүн чоң кубаныч!
+
+        <br><br>
+
+        Чакыруу менен:
+
+        <br>
+
+        <strong>Бубайым • Айгүл • Нуржигит</strong>
+
+        <div class="top-flower">
+            🌹🤍🌹
+        </div>
+
+    </div>
+
+    <button class="music" id="musicButton"
+    onclick="toggleMusic()">
+        🔊 Музыканы өчүрүү
+    </button>
+
+</div>
+</div>
+
+<script>
+
+/* ЖАРКЫРАГАН ЭФФЕКТ */
+
+for(let i=0;i<18;i++){
+    let s=document.createElement("div");
+    s.className="sparkle";
+    s.innerHTML="✧";
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=Math.random()*100+"vh";
+    s.style.animationDelay=Math.random()*4+"s";
+    document.body.appendChild(s);
+}
+
+/* КОНВЕРТТИ АЧУУ */
+
+let opened=false;
+
+function openCard(){
+
+    if(opened) return;
+
+    opened=true;
+
+    document.getElementById("envelope")
+    .classList.add("open");
+
+    document.getElementById("hint")
+    .style.display="none";
+
+    setTimeout(()=>{
+
+        document.getElementById("envelope")
+        .style.display="none";
+
+        document.getElementById("card")
+        .classList.add("show");
+
+        startMusic();
+
+    },1100);
+
+}
+
+/* МУЗЫКА */
+
+let audio;
+let timer;
+let playing=false;
+
+function startMusic(){
+
+    if(!audio){
+        audio=new(window.AudioContext ||
+        window.webkitAudioContext)();
+    }
+
+    audio.resume();
+
+    playing=true;
+
+    const melody=[
+        523.25,659.25,783.99,659.25,
+        587.33,698.46,880,698.46,
+        659.25,783.99,1046.5,880,
+        783.99,659.25,587.33,523.25
+    ];
+
+    let i=0;
+
+    function note(){
+
+        if(!playing)return;
+
+        let osc=audio.createOscillator();
+        let gain=audio.createGain();
+
+        osc.type="sine";
+        osc.frequency.value=melody[i%melody.length];
+
+        gain.gain.setValueAtTime(
+            0.001,audio.currentTime
+        );
+
+        gain.gain.linearRampToValueAtTime(
+            0.09,audio.currentTime+0.1
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.001,audio.currentTime+1
+        );
+
+        osc.connect(gain);
+        gain.connect(audio.destination);
+
+        osc.start();
+        osc.stop(audio.currentTime+1);
+
+        i++;
+    }
+
+    note();
+
+    timer=setInterval(note,700);
+
+    document.getElementById("musicButton")
+    .innerHTML="🔊 Музыканы өчүрүү";
+
+}
+
+function toggleMusic(){
+
+    if(playing){
+
+        playing=false;
+        clearInterval(timer);
+
+        document.getElementById("musicButton")
+        .innerHTML="🔇 Музыканы күйгүзүү";
+
+    }else{
+
+        startMusic();
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
